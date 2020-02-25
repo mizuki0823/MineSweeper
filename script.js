@@ -46,23 +46,82 @@ const subject = document.getElementById('subject')
 const score = document.getElementById('score')
 const results = document.getElementById('results')
 // subject
-const resultsData = []
+let resultsData = []
 
-const Tablein = (Insubject, Inscore) => {
+
+
+const Tablein = (Insubject, Inscore, Inrecord) => {
     // タグ作る
     const tr = document.createElement('tr')
     const tdSubject = document.createElement('td')
     const tdScore = document.createElement('td')
+    const tdRecord = document.createElement('td')
 
     // 代入する
     tdSubject.textContent = Insubject
     tdScore.textContent = Inscore
+    tdRecord.textContent = Inrecord
 
     // 親のタグ<tr>のなかに入れる
     tr.appendChild(tdSubject)
     tr.appendChild(tdScore)
+    tr.appendChild(tdRecord)
     // 親のタグ<table>のなかに入れる
     results.appendChild(tr)
+}
+
+const set = list => {
+    // hogedata ... [
+    //     {
+    //         subject: 'Japanese'
+    //         score: 92
+    //     },
+    //     {
+    //         subject: 'Programming'
+    //         score: 100
+    //     }
+    // ]
+
+    // <table id=results>の中身を全部消す
+    results.innerHTML = ''
+
+    // hogeDataを元に、<table>の中身を生成する
+    // <tr>
+    //     <td>Subject</td>
+    //     <td>Score</td>
+    // </tr>
+    // <tr>
+    //     <td>...</td>
+    //     <td>...</td>
+    // </tr>
+    // <tr>
+    //     <td>...</td>
+    //     <td>...</td>
+    // </tr>
+    // ...
+    // for
+    // tablein 使えばできる
+    Tablein('subject', 'score', 'record')
+    for(let j = 0; j < list.length; j++){
+        let record = ''
+        if(list[j].score < 60){
+            record = '不可'
+        }
+        else if(list[j].score < 70){
+            record = '可'
+        }
+        else if(list[j].score < 80){
+            record = '良'
+        }
+        else if(list[j].score < 90){
+            record = '優'
+        }
+        else{
+            record = '秀'
+        }
+        
+        Tablein(list[j].subject, list[j].score, record)
+    }
 }
 
 const addResult = () => {
@@ -71,13 +130,13 @@ const addResult = () => {
     console.log(`subject: ${subject.value}`)
     console.log(`score: ${score.value}`)
 
-    Tablein(subject.value, score.value)
+    // Tablein(subject.value, score.value)
 
-    console.log(tr)
+    // console.log(tr)
     // 連想配列
     const resultData = {
         'subject': subject.value,
-        'score': score.value
+        'score': Number(score.value)
     }
 
     console.log(resultData)
@@ -96,6 +155,7 @@ const addResult = () => {
     console.log('resultsJson')
 
     localStorage.setItem('results', resultsJson)
+    set(resultsData)
 
     subject.value = ''
     score.value = ''
@@ -115,11 +175,7 @@ console.log(array)
 if (localStorage.getItem('results')) {
     const decoded = JSON.parse(localStorage.getItem('results'))
     console.log(decoded)
+    resultsData = decoded
 
-    for(let i = 0; i < decoded.length; i++) {
-        console.log(i)
-        console.log(decoded[i])
-        
-       Tablein(decoded[i].subject, decoded[i].score)
-    }
+    set(decoded)
 }
