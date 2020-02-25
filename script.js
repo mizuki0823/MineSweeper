@@ -50,7 +50,7 @@ let resultsData = []
 
 
 
-const Tablein = (Insubject, Inscore, Inrecord) => {
+const Tablein = (Insubject, Inscore, Inrecord, Inclass) => {
     // タグ作る
     const tr = document.createElement('tr')
     const tdSubject = document.createElement('td')
@@ -61,6 +61,12 @@ const Tablein = (Insubject, Inscore, Inrecord) => {
     tdSubject.textContent = Insubject
     tdScore.textContent = Inscore
     tdRecord.textContent = Inrecord
+
+    if(Inclass !== ''){
+        tdScore.classList.add(Inclass)
+        tdRecord.classList.add(Inclass)
+    }
+ 
 
     // 親のタグ<tr>のなかに入れる
     tr.appendChild(tdSubject)
@@ -101,11 +107,13 @@ const set = list => {
     // ...
     // for
     // tablein 使えばできる
-    Tablein('subject', 'score', 'record')
+    Tablein('subject', 'score', 'record', '')
     for(let j = 0; j < list.length; j++){
         let record = ''
+        let classname = ''
         if(list[j].score < 60){
             record = '不可'
+            classname = 'failure'
         }
         else if(list[j].score < 70){
             record = '可'
@@ -120,7 +128,7 @@ const set = list => {
             record = '秀'
         }
         
-        Tablein(list[j].subject, list[j].score, record)
+        Tablein(list[j].subject, list[j].score, record, classname)
     }
 }
 
