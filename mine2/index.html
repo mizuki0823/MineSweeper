@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- {{ message }}
+  <br>
+  {{ message.length }} -->
+  <table>
+    <tr>
+        <td>Subject</td><td>Score</td>
+    </tr>
+    <tr>
+        <td>
+            <input type="text" v-model="subjectdata">
+        </td>
+
+        <td>
+            <input type="text" v-model="scoredata">
+        </td>
+
+        <td>
+            <button v-on:click="add">追加</button>
+        </td>
+
+    </tr>
+    <tr v-for="result in results">
+        <!-- {{ result }} -->
+        <td>
+            {{ result.subject }}
+        </td>
+        
+        <td>
+            {{ result.score}}
+        </td>
+
+
+    </tr>
+    
+
+    
+    <!-- <tr>
+        <td v-for="text in texts">
+            {{ text }}
+        </td>
+        <td>
+            a
+        </td>
+        <td v-for="text in texts">
+            b
+        </td>
+        <td v-for="text in texts">
+            c
+        </td>
+        
+    </tr> -->
+  </table>
+  <!-- {{ texts.length }}
+  <br>
+  <input type="text" v-model="message">
+  <br>
+  <br>
+  {{ count }}
+  <button v-on:click="increment">+1</button> -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
